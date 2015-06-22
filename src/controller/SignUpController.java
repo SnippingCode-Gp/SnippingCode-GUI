@@ -58,6 +58,9 @@ public class SignUpController {
         case HttpURLConnection.HTTP_CONFLICT:
           view.errorMessage("exists");
           break;
+        case HttpURLConnection.HTTP_NOT_FOUND:
+          view.errorMessage("the server is down");
+          break;
         default:
           break;
         }
