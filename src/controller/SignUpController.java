@@ -58,16 +58,13 @@ public class SignUpController {
         case HttpURLConnection.HTTP_CONFLICT:
           view.errorMessage("exists");
           break;
-        case HttpURLConnection.HTTP_NOT_FOUND:
-          view.errorMessage("the server is down");
-          break;
         default:
           break;
         }
       } catch (JSONException e1) {
         e1.printStackTrace();
       } catch (IOException e1) {
-        e1.printStackTrace();
+        view.errorMessage("the server is down");
       }
     }
 
