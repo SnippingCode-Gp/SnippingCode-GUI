@@ -1,12 +1,9 @@
 package model;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import SnippingCode.Domain.User;
+import SnippingCode.Service.UserHttpRequest;
 
 
 public class LoginModel {
@@ -22,27 +19,16 @@ public class LoginModel {
     this.password = password;
   }
 
-  public int tryToLogin() throws IOException, JSONException {
-    JSONObject jsonObject = new JSONObject();
-    jsonObject.put("username", this.username);
-    jsonObject.put("password", this.password);
-    String urlParameters = jsonObject.toString();
-
-    String requestURL = "http://localhost:8080/CodeSnipping/registration/login";
-    URL url = new URL(requestURL);
-    HttpURLConnection connection = (HttpURLConnection)url.openConnection();           
-    connection.setDoOutput(true);
-    connection.setInstanceFollowRedirects(false);
-    connection.setRequestMethod("POST");
-    connection.setRequestProperty("Content-Type", "application/json");
-    connection.setUseCaches(false);
-
-    DataOutputStream outStream = new DataOutputStream(connection.getOutputStream());
-    outStream.write(urlParameters.getBytes());
-    outStream.flush();
-    outStream.close();
+  public int tryToLogin() throws IOException {
+    if(this.username.equals("")) return 1;
+    if(this.password.equals("")) return 1;
     
-    return connection.getResponseCode();
+    User user = new User();
+    user.setUsername(this.username);
+    user.setPassword(this.password);
+
+    UserHttpRequest request = new UserHttpRequest(user);
+    return request.login();
   }
 
 }

@@ -1,14 +1,9 @@
 package model;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import SnippingCode.Domain.User;
+import SnippingCode.Service.UserHttpRequest;
 import service.EmailValidator;
 
 public class SignUpModel {
@@ -46,7 +41,7 @@ public class SignUpModel {
     this.email = email;
   }
   
-  public int tryToSignUp() throws JSONException, IOException {
+  public int tryToSignUp() throws IOException {
     if(this.firstName.equals("")) return 1;
     if(this.lastName.equals("")) return 1;
     if(this.username.equals("")) return 1;
@@ -56,29 +51,15 @@ public class SignUpModel {
     if(!this.password.equals(this.rePassword)) return 2;
     if(!this.emailValidator.isValid(this.email)) return 3;
     
-    JSONObject jsonObject = new JSONObject();
-    jsonObject.put("name", this.firstName);
-//    jsonObject.put("lastname", this.lastName);
-    jsonObject.put("username", this.username);
-    jsonObject.put("password", this.password);
-    jsonObject.put("email", this.email);
-    String urlParameters = jsonObject.toString();
-
-    String requestURL = "http://localhost:8080/CodeSnipping/SignUp";
-    URL url = new URL(requestURL);
-    HttpURLConnection connection = (HttpURLConnection)url.openConnection();           
-    connection.setDoOutput(true);
-    connection.setInstanceFollowRedirects(false);
-    connection.setRequestMethod("POST");
-    connection.setRequestProperty("Content-Type", "application/json");
-    connection.setUseCaches(false);
-
-    DataOutputStream outStream = new DataOutputStream(connection.getOutputStream());
-    outStream.write(urlParameters.getBytes());
-    outStream.flush();
-    outStream.close();
+    User user = new User();
+    user.setFirstName(this.firstName);
+    user.setLastName(this.lastName);
+    user.setUsername(this.username);
+    user.setPassword(this.password);
+    user.setEmail(this.email);
     
-    return connection.getResponseCode();
+    UserHttpRequest request = new UserHttpRequest(user);
+    return request.signUp();
   }
   
 }

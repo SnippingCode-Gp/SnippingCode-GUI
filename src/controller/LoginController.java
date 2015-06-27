@@ -7,8 +7,6 @@ import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 
-import org.json.JSONException;
-
 import view.LoginView;
 import model.LoginModel;
 
@@ -34,6 +32,9 @@ public class LoginController {
       try {
         int statusCode = model.tryToLogin();
         switch(statusCode) {
+        case 1:
+          view.errorMessage("some fields are missed");
+          break;
         case HttpURLConnection.HTTP_OK:
           view.errorMessage("Done");
           break;
@@ -43,10 +44,8 @@ public class LoginController {
         default:
           break;
         }
-      } catch (IOException e1) {
+      } catch(IOException e1) {
         view.errorMessage("the server is down");
-      } catch (JSONException e1) {
-        e1.printStackTrace();
       }
     }
 

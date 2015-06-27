@@ -7,8 +7,6 @@ import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 
-import org.json.JSONException;
-
 import model.SignUpModel;
 import view.SignUpView;
 
@@ -61,9 +59,7 @@ public class SignUpController {
         default:
           break;
         }
-      } catch (JSONException e1) {
-        e1.printStackTrace();
-      } catch (IOException e1) {
+      } catch(IOException e1) {
         view.errorMessage("the server is down");
       }
     }
