@@ -67,7 +67,7 @@ public class SignUpModel {
     String requestURL = "http://localhost:8080/CodeSnipping/SignUp";
     URL url = new URL(requestURL);
     HttpURLConnection connection = (HttpURLConnection)url.openConnection();           
-    connection.setDoOutput( true );
+    connection.setDoOutput(true);
     connection.setInstanceFollowRedirects(false);
     connection.setRequestMethod("POST");
     connection.setRequestProperty("Content-Type", "application/json");
