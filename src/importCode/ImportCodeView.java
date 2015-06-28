@@ -1,4 +1,4 @@
-package view;
+package importCode;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -19,17 +19,17 @@ import javax.swing.SpringLayout;
 import javax.swing.event.ListSelectionListener;
 
 @SuppressWarnings("serial")
-public class DownloadView extends JFrame {
+public class ImportCodeView extends JFrame {
   private JList<String> codesNameList;
   private DefaultListModel<String> codesNameData;
   private JTextArea viewCodeArea;
   private DefaultListModel<String> codeTagsData;
   private JList<String> codeTagsList;
-  private JButton downloadButton;
+  private JButton importButton;
   private JLabel codeVersionValue;
 
-  public DownloadView() {
-    super("Download");
+  public ImportCodeView() {
+    super("Import Code");
     this.setSize(600, 600);
     this.setResizable(false);
     this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -42,7 +42,7 @@ public class DownloadView extends JFrame {
     this.codeTagsData = new DefaultListModel<String>();
     this.codeTagsList = new JList<String>(codeTagsData);
     this.codeTagsList.setFixedCellWidth(300);
-    this.downloadButton = new JButton("Download");
+    this.importButton = new JButton("Import");
     this.codeVersionValue = new JLabel("");
 
 
@@ -97,14 +97,14 @@ public class DownloadView extends JFrame {
     mainPanelLayout.putConstraint(SpringLayout.WEST, viewPanel, 5, SpringLayout.WEST, mainPanel);
     mainPanelLayout.putConstraint(SpringLayout.NORTH, infoPanel, 5, SpringLayout.SOUTH, viewPanel);
     mainPanelLayout.putConstraint(SpringLayout.WEST, infoPanel, 5, SpringLayout.WEST, viewPanel);
-    mainPanelLayout.putConstraint(SpringLayout.WEST, downloadButton, 10, SpringLayout.WEST, mainPanel);
-    mainPanelLayout.putConstraint(SpringLayout.SOUTH, downloadButton, -10, SpringLayout.SOUTH, mainPanel);
+    mainPanelLayout.putConstraint(SpringLayout.WEST, importButton, 10, SpringLayout.WEST, mainPanel);
+    mainPanelLayout.putConstraint(SpringLayout.SOUTH, importButton, -10, SpringLayout.SOUTH, mainPanel);
 
     mainPanel.add(codeNameTitleLabel);
     mainPanel.add(codeBodyTitleLabel);
     mainPanel.add(viewPanel);
     mainPanel.add(infoPanel);
-    mainPanel.add(this.downloadButton);
+    mainPanel.add(this.importButton);
     mainPanel.setLayout(mainPanelLayout);
 
 
@@ -127,8 +127,8 @@ public class DownloadView extends JFrame {
     this.codesNameList.addListSelectionListener(listener);
   }
 
-  public void setDownloadButtonAction(ActionListener listener) {
-    this.downloadButton.addActionListener(listener);
+  public void setImportButtonAction(ActionListener listener) {
+    this.importButton.addActionListener(listener);
   }
 
   public void setCodesNameList(String[] codesName) {

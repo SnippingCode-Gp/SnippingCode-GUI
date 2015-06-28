@@ -1,4 +1,4 @@
-package controller;
+package importCode;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,34 +6,31 @@ import java.awt.event.ActionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import model.DownloadModel;
-import view.DownloadView;
-
-public class DownloadController {
+public class ImportCodeController {
   
-  private DownloadView view;
-  private DownloadModel model;
+  private ImportCodeView view;
+  private ImportCodeModel model;
 
-  public DownloadController(DownloadModel model, DownloadView view) {
+  public ImportCodeController(ImportCodeModel model, ImportCodeView view) {
     this.view = view;
     this.model = model;
 
     this.view.setCodesListAction(new CodesNameListAction());
-    this.view.setDownloadButtonAction(new DownloadButtonAction());
+    this.view.setImportButtonAction(new ImportButtonAction());
   }
 
   class CodesNameListAction implements ListSelectionListener {
     
     public void valueChanged(ListSelectionEvent e) {
       model.setCodeName(view.getSelectedValueFromCodesList());
-      view.setViewAreaContent(model.getCode());
-      view.setCodeVersionValue(model.getVersion());
+      view.setViewAreaContent(model.getCodeBody());
+      view.setCodeVersionValue(model.getCodeVersion());
       view.setCodeTagsList(model.getCodeTags());
     }
     
   }
 
-  class DownloadButtonAction implements ActionListener {
+  class ImportButtonAction implements ActionListener {
   
     public void actionPerformed(ActionEvent e) {
       

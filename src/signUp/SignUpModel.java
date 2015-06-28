@@ -1,4 +1,4 @@
-package model;
+package signUp;
 
 import java.io.IOException;
 

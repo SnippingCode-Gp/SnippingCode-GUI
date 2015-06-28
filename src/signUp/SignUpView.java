@@ -1,4 +1,4 @@
-package view;
+package signUp;
 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
