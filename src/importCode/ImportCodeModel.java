@@ -1,6 +1,7 @@
 package importCode;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.util.Set;
 
@@ -65,4 +66,14 @@ public class ImportCodeModel {
     code.printAll();
   }
 
+  public void importCode() {
+    String strManyDirectories="src"+File.separator+"imported";
+    try {
+      (new File(strManyDirectories)).mkdirs();
+
+    } catch(Exception e) {
+      System.err.println("Error: " + e.getMessage());
+    }
+  }
+  
 }
