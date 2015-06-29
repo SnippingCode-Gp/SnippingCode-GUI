@@ -3,9 +3,11 @@ package importCode;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -27,10 +29,12 @@ public class ImportCodeView extends JFrame {
   private JList<String> codeTagsList;
   private JButton importButton;
   private JLabel codeVersionValue;
-
+  private JComboBox<String> projectsNameBox;
+  
   public ImportCodeView() {
     super("Import Code");
     this.setSize(600, 600);
+    this.setLocation(200, 100);
     this.setResizable(false);
 //    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -44,7 +48,9 @@ public class ImportCodeView extends JFrame {
     this.codeTagsList.setFixedCellWidth(300);
     this.importButton = new JButton("Import");
     this.codeVersionValue = new JLabel("");
-
+    this.projectsNameBox = new JComboBox<String>();
+    this.projectsNameBox.setPreferredSize(new Dimension(150, 20));
+    
 
     JScrollPane codesNamePane = new JScrollPane(this.codesNameList);
     JScrollPane codeTagsPane = new JScrollPane(this.codeTagsList);
@@ -57,6 +63,7 @@ public class ImportCodeView extends JFrame {
     JLabel codeNameTitleLabel = new JLabel("Code Name");
     JLabel codeBodyTitleLabel = new JLabel("Code Body");
     JLabel codeVersionLabel = new JLabel("Version: ");
+    JLabel chooseProjectLabel = new JLabel("Choose Project: ");
     SpringLayout infoPanelLayout = new SpringLayout();
     SpringLayout mainPanelLayout = new SpringLayout();
 
@@ -78,8 +85,8 @@ public class ImportCodeView extends JFrame {
 
     infoPanelLayout.putConstraint(SpringLayout.WEST, codeVersionLabel, 5, SpringLayout.WEST, infoPanel);
     infoPanelLayout.putConstraint(SpringLayout.NORTH, codeVersionLabel, 10, SpringLayout.NORTH, infoPanel);
-    infoPanelLayout.putConstraint(SpringLayout.WEST, codeVersionValue, 0, SpringLayout.EAST, codeVersionLabel);
-    infoPanelLayout.putConstraint(SpringLayout.NORTH, codeVersionValue, 10, SpringLayout.NORTH, infoPanel);
+    infoPanelLayout.putConstraint(SpringLayout.WEST, this.codeVersionValue, 0, SpringLayout.EAST, codeVersionLabel);
+    infoPanelLayout.putConstraint(SpringLayout.NORTH, this.codeVersionValue, 10, SpringLayout.NORTH, infoPanel);
 
     infoPanel.add(codeVersionLabel);
     infoPanel.add(this.codeVersionValue);
@@ -97,14 +104,21 @@ public class ImportCodeView extends JFrame {
     mainPanelLayout.putConstraint(SpringLayout.WEST, viewPanel, 5, SpringLayout.WEST, mainPanel);
     mainPanelLayout.putConstraint(SpringLayout.NORTH, infoPanel, 5, SpringLayout.SOUTH, viewPanel);
     mainPanelLayout.putConstraint(SpringLayout.WEST, infoPanel, 5, SpringLayout.WEST, viewPanel);
-    mainPanelLayout.putConstraint(SpringLayout.WEST, importButton, 10, SpringLayout.WEST, mainPanel);
-    mainPanelLayout.putConstraint(SpringLayout.SOUTH, importButton, -10, SpringLayout.SOUTH, mainPanel);
+    mainPanelLayout.putConstraint(SpringLayout.EAST, this.importButton, -10, SpringLayout.EAST, mainPanel);
+    mainPanelLayout.putConstraint(SpringLayout.SOUTH, this.importButton, -10, SpringLayout.SOUTH, mainPanel);
+    
+    mainPanelLayout.putConstraint(SpringLayout.WEST, chooseProjectLabel, 10, SpringLayout.WEST, mainPanel);
+    mainPanelLayout.putConstraint(SpringLayout.SOUTH, chooseProjectLabel, -20, SpringLayout.SOUTH, mainPanel);
+    mainPanelLayout.putConstraint(SpringLayout.WEST, this.projectsNameBox, 140, SpringLayout.WEST, mainPanel);
+    mainPanelLayout.putConstraint(SpringLayout.SOUTH, this.projectsNameBox, -20, SpringLayout.SOUTH, mainPanel);
 
     mainPanel.add(codeNameTitleLabel);
     mainPanel.add(codeBodyTitleLabel);
     mainPanel.add(viewPanel);
     mainPanel.add(infoPanel);
+    mainPanel.add(chooseProjectLabel);
     mainPanel.add(this.importButton);
+    mainPanel.add(this.projectsNameBox);
     mainPanel.setLayout(mainPanelLayout);
 
 
@@ -115,6 +129,10 @@ public class ImportCodeView extends JFrame {
     return this.codesNameList.getSelectedValue();
   }
 
+  public String getSelectedProject() {
+    return this.projectsNameBox.getSelectedItem().toString();
+  }
+  
   public void setViewAreaContent(String content) {
     this.viewCodeArea.setText(content);
   }
@@ -142,6 +160,11 @@ public class ImportCodeView extends JFrame {
       this.codeTagsData.addElement(tags[i]);
   }
 
+  public void setProjectsNameBox(List<String> projectsName) {
+    for(int i = 0; i < projectsName.size(); ++i)
+      this.projectsNameBox.addItem(projectsName.get(i));
+  }
+  
   public void errorMessage(String message) {
     JOptionPane.showMessageDialog(this, message);
   }

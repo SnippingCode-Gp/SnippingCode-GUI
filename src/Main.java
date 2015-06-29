@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 import java.util.List;
 
 import SnippingCode.Domain.Code;
@@ -13,6 +14,12 @@ public class Main {
     ImportCodeModel model = new ImportCodeModel();
     ImportCodeView view = new ImportCodeView();
     
+    List<String> l = new LinkedList<String>();
+    for(int i = 0; i < 10; ++i)
+      l.add(String.format("name %d", i));
+    
+    view.setProjectsNameBox(l);
+    
     String pathTest = "/home/abdelgawad/.SC/Codes.xml";
     FileOperation fileOperation = new FileOperation();
     List<Code> codes = fileOperation.parseXmlFile(pathTest);
@@ -21,6 +28,7 @@ public class Main {
       arr[i] = codes.get(i).getName();
     view.setCodesNameList(arr);
     ImportCodeController controller = new ImportCodeController(model, view);
+    
     view.setVisible(true);
   }
 

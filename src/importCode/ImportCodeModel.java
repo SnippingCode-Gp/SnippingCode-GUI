@@ -67,11 +67,11 @@ public class ImportCodeModel {
     code.printAll();
   }
 
-  public void importCode() {
-    String strManyDirectories="src"+File.separator+"imported";
+  public void importCode(String projectPath) {
+    String strManyDirectories = projectPath + File.separator + "src" + File.separator + "imported";
     try {
       (new File(strManyDirectories)).mkdirs();
-      PrintWriter writer = new PrintWriter(strManyDirectories+File.separator+this.codeName+".java", "UTF-8");
+      PrintWriter writer = new PrintWriter(strManyDirectories + File.separator + this.codeName + ".java", "UTF-8");
       writer.write(this.code.getCode());
       writer.close();
     } catch(Exception e) {
