@@ -33,7 +33,7 @@ public class ImportCodeController {
   class ImportButtonAction implements ActionListener {
   
     public void actionPerformed(ActionEvent e) {
-      
+      model.importCode();
     }
     
   }

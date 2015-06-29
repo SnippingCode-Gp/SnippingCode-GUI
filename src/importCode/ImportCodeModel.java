@@ -3,6 +3,7 @@ package importCode;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.Set;
 
 import SnippingCode.Domain.Code;
@@ -70,7 +71,9 @@ public class ImportCodeModel {
     String strManyDirectories="src"+File.separator+"imported";
     try {
       (new File(strManyDirectories)).mkdirs();
-
+      PrintWriter writer = new PrintWriter(strManyDirectories+File.separator+this.codeName+".java", "UTF-8");
+      writer.write(this.code.getCode());
+      writer.close();
     } catch(Exception e) {
       System.err.println("Error: " + e.getMessage());
     }
