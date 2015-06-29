@@ -23,7 +23,7 @@ public class LoginView extends JFrame {
     this.setSize(370, 150);
     this.setResizable(false);
     this.setLocation(400, 200);
-    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+//    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
     this.usernameField = new JTextField(20);
     this.passwordField = new JPasswordField(20);

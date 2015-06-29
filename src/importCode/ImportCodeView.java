@@ -32,7 +32,7 @@ public class ImportCodeView extends JFrame {
     super("Import Code");
     this.setSize(600, 600);
     this.setResizable(false);
-    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+//    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 
     this.viewCodeArea =  new JTextArea();

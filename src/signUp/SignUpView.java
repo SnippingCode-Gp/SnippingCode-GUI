@@ -26,7 +26,7 @@ public class SignUpView extends JFrame {
     this.setSize(400, 300);
     this.setResizable(false);
     this.setLocation(400, 100);
-    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+//    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     
     this.firstNameField = new JTextField(20);
     this.lastNameField = new JTextField(20);
