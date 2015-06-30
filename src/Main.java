@@ -1,6 +1,8 @@
 import java.util.LinkedList;
 import java.util.List;
 
+import run.Login;
+import run.SignUp;
 import SnippingCode.Domain.Code;
 import SnippingCode.Service.FileOperation;
 import importCode.ImportCodeController;
@@ -30,6 +32,12 @@ public class Main {
     ImportCodeController controller = new ImportCodeController(model, view);
     
     view.setVisible(true);
+    
+//    Login l = new Login();
+//    l.run();
+    
+//    SignUp s = new SignUp();
+//    s.run();
   }
 
 }

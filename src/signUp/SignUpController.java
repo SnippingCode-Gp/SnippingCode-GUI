@@ -49,6 +49,7 @@ public class SignUpController {
           break;
         case HttpURLConnection.HTTP_OK:
           view.errorMessage("Done");
+          view.dispose();
           break;
         case HttpURLConnection.HTTP_CONFLICT:
           view.errorMessage("exists");

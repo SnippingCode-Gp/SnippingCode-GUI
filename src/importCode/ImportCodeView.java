@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.event.ListSelectionListener;
@@ -43,10 +44,12 @@ public class ImportCodeView extends JFrame {
     this.viewCodeArea.setEditable(false);
     this.codesNameData = new DefaultListModel<String>();
     this.codesNameList = new JList<String>(codesNameData);
+    this.codesNameList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     this.codeTagsData = new DefaultListModel<String>();
     this.codeTagsList = new JList<String>(codeTagsData);
     this.codeTagsList.setFixedCellWidth(300);
     this.importButton = new JButton("Import");
+    this.importButton.setEnabled(false);
     this.codeVersionValue = new JLabel("");
     this.projectsNameBox = new JComboBox<String>();
     this.projectsNameBox.setPreferredSize(new Dimension(150, 20));
@@ -126,6 +129,7 @@ public class ImportCodeView extends JFrame {
   }
 
   public String getSelectedValueFromCodesList() {
+    if(!this.importButton.isEnabled()) this.importButton.setEnabled(true);
     return this.codesNameList.getSelectedValue();
   }
 

@@ -34,6 +34,7 @@ public class LoginController {
           break;
         case HttpURLConnection.HTTP_OK:
           view.errorMessage("Done");
+          view.dispose();
           break;
         case HttpURLConnection.HTTP_NOT_FOUND:
           view.errorMessage("invalid usename or password");
