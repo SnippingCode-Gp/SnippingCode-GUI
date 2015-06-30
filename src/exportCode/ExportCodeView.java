@@ -1,11 +1,16 @@
-package view;
+package exportCode;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -15,41 +20,46 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.event.ListSelectionListener;
 
 @SuppressWarnings("serial")
-public class UploadView extends JFrame {
+public class ExportCodeView extends JFrame {
   private JList<String> codesNameList;
   private DefaultListModel<String> codesNameData;
   private JTextArea viewCodeArea;
   private DefaultListModel<String> codeTagsData;
   private JList<String> codeTagsList;
-  private JButton uploadButton;
-  private JTextField codeVersionValue;
+  private JButton exportButton;
   private JButton addTagButton;
   private JTextField tagNameField;
-
-  public UploadView() {
-    super("Upload");
+  private JComboBox<String> projectsNameBox;
+  
+  public ExportCodeView() {
+    super("Export");
     this.setSize(600, 600);
+    this.setLocation(200, 100);
     this.setResizable(false);
-    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+//    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 
     this.viewCodeArea =  new JTextArea();
     this.viewCodeArea.setEditable(false);
     this.codesNameData = new DefaultListModel<String>();
     this.codesNameList = new JList<String>(codesNameData);
+    this.codesNameList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     this.codeTagsData = new DefaultListModel<String>();
     this.codeTagsList = new JList<String>(codeTagsData);
     this.codeTagsList.setFixedCellWidth(300);
-    this.uploadButton = new JButton("Upload");
-    this.codeVersionValue = new JTextField(10);
+    this.exportButton = new JButton("Export");
     this.addTagButton = new JButton("Add Tag");
     this.tagNameField = new JTextField(15);
-
+    this.projectsNameBox = new JComboBox<String>();
+    this.projectsNameBox.setPreferredSize(new Dimension(150, 20));
+    
+    
     JScrollPane codesNamePane = new JScrollPane(this.codesNameList);
     JScrollPane codeTagsPane = new JScrollPane(this.codeTagsList);
     JScrollPane viewCodePane = new JScrollPane(this.viewCodeArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -60,7 +70,7 @@ public class UploadView extends JFrame {
     JLabel tagsLabel = new JLabel("Tags: ");
     JLabel codeNameTitleLabel = new JLabel("Code Name");
     JLabel codeBodyTitleLabel = new JLabel("Code Body");
-    JLabel codeVersionLabel = new JLabel("Version: ");
+    JLabel chooseProjectLabel = new JLabel("Choose Project: ");
     SpringLayout infoPanelLayout = new SpringLayout();
     SpringLayout mainPanelLayout = new SpringLayout();
 
@@ -80,13 +90,13 @@ public class UploadView extends JFrame {
     infoPanelLayout.putConstraint(SpringLayout.EAST, tagsLabel, 0, SpringLayout.WEST, codeTagsPane);
     infoPanelLayout.putConstraint(SpringLayout.NORTH, tagsLabel, 10, SpringLayout.NORTH, infoPanel);
 
-    infoPanelLayout.putConstraint(SpringLayout.WEST, codeVersionLabel, 5, SpringLayout.WEST, infoPanel);
-    infoPanelLayout.putConstraint(SpringLayout.NORTH, codeVersionLabel, 10, SpringLayout.NORTH, infoPanel);
-    infoPanelLayout.putConstraint(SpringLayout.WEST, codeVersionValue, 0, SpringLayout.EAST, codeVersionLabel);
-    infoPanelLayout.putConstraint(SpringLayout.NORTH, codeVersionValue, 10, SpringLayout.NORTH, infoPanel);
-
-    infoPanel.add(codeVersionLabel);
-    infoPanel.add(this.codeVersionValue);
+    infoPanelLayout.putConstraint(SpringLayout.WEST, chooseProjectLabel, 10, SpringLayout.WEST, infoPanel);
+    infoPanelLayout.putConstraint(SpringLayout.NORTH, chooseProjectLabel, 10, SpringLayout.NORTH, infoPanel);
+    infoPanelLayout.putConstraint(SpringLayout.WEST, this.projectsNameBox, 10, SpringLayout.WEST, infoPanel);
+    infoPanelLayout.putConstraint(SpringLayout.NORTH, this.projectsNameBox, 30, SpringLayout.NORTH, infoPanel);
+    
+    infoPanel.add(chooseProjectLabel);
+    infoPanel.add(this.projectsNameBox);
     infoPanel.add(codeTagsPane);
     infoPanel.add(tagsLabel);
     infoPanel.setLayout(infoPanelLayout);
@@ -101,20 +111,20 @@ public class UploadView extends JFrame {
     mainPanelLayout.putConstraint(SpringLayout.WEST, viewPanel, 5, SpringLayout.WEST, mainPanel);
     mainPanelLayout.putConstraint(SpringLayout.NORTH, infoPanel, 5, SpringLayout.SOUTH, viewPanel);
     mainPanelLayout.putConstraint(SpringLayout.WEST, infoPanel, 5, SpringLayout.WEST, viewPanel);
-    mainPanelLayout.putConstraint(SpringLayout.WEST, uploadButton, 10, SpringLayout.WEST, mainPanel);
-    mainPanelLayout.putConstraint(SpringLayout.SOUTH, uploadButton, -10, SpringLayout.SOUTH, mainPanel);
+    mainPanelLayout.putConstraint(SpringLayout.WEST, this.exportButton, 10, SpringLayout.WEST, mainPanel);
+    mainPanelLayout.putConstraint(SpringLayout.SOUTH, this.exportButton, -10, SpringLayout.SOUTH, mainPanel);
 
-    mainPanelLayout.putConstraint(SpringLayout.EAST, addTagButton, -10, SpringLayout.EAST, mainPanel);
-    mainPanelLayout.putConstraint(SpringLayout.SOUTH, addTagButton, -10, SpringLayout.SOUTH, mainPanel);
+    mainPanelLayout.putConstraint(SpringLayout.EAST, this.addTagButton, -10, SpringLayout.EAST, mainPanel);
+    mainPanelLayout.putConstraint(SpringLayout.SOUTH, this.addTagButton, -10, SpringLayout.SOUTH, mainPanel);
 
-    mainPanelLayout.putConstraint(SpringLayout.EAST, tagNameField, -5, SpringLayout.WEST, addTagButton);
-    mainPanelLayout.putConstraint(SpringLayout.SOUTH, tagNameField, -10, SpringLayout.SOUTH, mainPanel);
+    mainPanelLayout.putConstraint(SpringLayout.EAST, this.tagNameField, -5, SpringLayout.WEST, addTagButton);
+    mainPanelLayout.putConstraint(SpringLayout.SOUTH, this.tagNameField, -10, SpringLayout.SOUTH, mainPanel);
 
     mainPanel.add(codeNameTitleLabel);
     mainPanel.add(codeBodyTitleLabel);
     mainPanel.add(viewPanel);
     mainPanel.add(infoPanel);
-    mainPanel.add(this.uploadButton);
+    mainPanel.add(this.exportButton);
     mainPanel.add(this.addTagButton);
     mainPanel.add(this.tagNameField);
     mainPanel.setLayout(mainPanelLayout);
@@ -127,20 +137,33 @@ public class UploadView extends JFrame {
     return this.codesNameList.getSelectedValue();
   }
 
+  public String getSelectedProject() {
+    return this.projectsNameBox.getSelectedItem().toString();
+  }
+  
+  public String getCodeTag() {
+    String codeTag = this.tagNameField.getText();
+    this.tagNameField.setText("");
+    return codeTag;
+  }
+  
+  public Set<String> getAllTags() {
+    Set<String> tagsSet = new HashSet<String>();
+    for(int i = 0; i < this.codeTagsData.size(); ++i)
+      tagsSet.add(this.codeTagsData.elementAt(i));
+    return tagsSet;
+  }
+  
   public void setViewAreaContent(String content) {
     this.viewCodeArea.setText(content);
-  }
-
-  public void setCodeVersionValue(String value) {
-    this.codeVersionValue.setText(value);
   }
 
   public void setCodesListAction(ListSelectionListener listener) {
     this.codesNameList.addListSelectionListener(listener);
   }
 
-  public void setUploadButtonAction(ActionListener listener) {
-    this.uploadButton.addActionListener(listener);
+  public void setExportButtonAction(ActionListener listener) {
+    this.exportButton.addActionListener(listener);
   }
 
   public void setAddTagButtonAction(ActionListener listener) {
@@ -148,16 +171,40 @@ public class UploadView extends JFrame {
   }
 
   public void setCodesNameList(String[] codesName) {
+    this.codesNameData.clear();
     for(int i = 0; i < codesName.length; ++i)
       this.codesNameData.addElement(codesName[i]);
   }
 
-  public void setCodeTagsList(String[] tags) {
-    this.codeTagsData.clear();
-    for(int i = 0; i < tags.length; ++i)
-      this.codeTagsData.addElement(tags[i]);
+  public void addCodeName(String codesName) {
+    this.codesNameData.addElement(codesName);
+  }
+  
+  public void addCodeTag(String tag) {
+    this.codeTagsData.addElement(tag);
   }
 
+  public void clearCodesNameList() {
+    this.codesNameData.clear();
+  }
+  
+  public void clearCodeTagsList() {
+    this.codesNameData.clear();
+  }
+  
+  public void setProjectsNameBox(List<String> projectsName) {
+    for(int i = 0; i < projectsName.size(); ++i)
+      this.projectsNameBox.addItem(projectsName.get(i));
+  }
+  
+  public void setProjectsNameBoxAction(ActionListener listener) {
+    this.projectsNameBox.addActionListener(listener);
+  }
+  
+  public void setTagNameFieldAction(KeyListener listener) {
+    this.tagNameField.addKeyListener(listener);
+  }
+  
   public void errorMessage(String message) {
     JOptionPane.showMessageDialog(this, message);
   }
