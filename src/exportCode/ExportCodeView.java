@@ -2,6 +2,7 @@ package exportCode;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.util.HashSet;
@@ -34,6 +35,7 @@ public class ExportCodeView extends JFrame {
   private JList<String> codeTagsList;
   private JButton exportButton;
   private JButton addTagButton;
+  private JButton removeTagButton;
   private JTextField tagNameField;
   private JComboBox<String> projectsNameBox;
   
@@ -54,7 +56,11 @@ public class ExportCodeView extends JFrame {
     this.codeTagsList = new JList<String>(codeTagsData);
     this.codeTagsList.setFixedCellWidth(300);
     this.exportButton = new JButton("Export");
+    this.exportButton.setEnabled(false);
     this.addTagButton = new JButton("Add Tag");
+    this.removeTagButton = new JButton("X");
+    this.removeTagButton.setToolTipText("remove selected tag");
+    this.removeTagButton.setMargin(new Insets(0, 0, 0, 0));
     this.tagNameField = new JTextField(15);
     this.projectsNameBox = new JComboBox<String>();
     this.projectsNameBox.setPreferredSize(new Dimension(150, 20));
@@ -90,11 +96,15 @@ public class ExportCodeView extends JFrame {
     infoPanelLayout.putConstraint(SpringLayout.EAST, tagsLabel, 0, SpringLayout.WEST, codeTagsPane);
     infoPanelLayout.putConstraint(SpringLayout.NORTH, tagsLabel, 10, SpringLayout.NORTH, infoPanel);
 
+    infoPanelLayout.putConstraint(SpringLayout.EAST, this.removeTagButton, -5, SpringLayout.WEST, codeTagsPane);
+    infoPanelLayout.putConstraint(SpringLayout.NORTH, this.removeTagButton, 10, SpringLayout.SOUTH, tagsLabel);
+    
     infoPanelLayout.putConstraint(SpringLayout.WEST, chooseProjectLabel, 10, SpringLayout.WEST, infoPanel);
     infoPanelLayout.putConstraint(SpringLayout.NORTH, chooseProjectLabel, 10, SpringLayout.NORTH, infoPanel);
     infoPanelLayout.putConstraint(SpringLayout.WEST, this.projectsNameBox, 10, SpringLayout.WEST, infoPanel);
     infoPanelLayout.putConstraint(SpringLayout.NORTH, this.projectsNameBox, 30, SpringLayout.NORTH, infoPanel);
     
+    infoPanel.add(this.removeTagButton);
     infoPanel.add(chooseProjectLabel);
     infoPanel.add(this.projectsNameBox);
     infoPanel.add(codeTagsPane);
@@ -134,9 +144,15 @@ public class ExportCodeView extends JFrame {
   }
 
   public String getSelectedValueFromCodesList() {
+    if(!this.exportButton.isEnabled() && this.codesNameList.getSelectedValue() != null)
+      this.exportButton.setEnabled(true);
     return this.codesNameList.getSelectedValue();
   }
 
+  public int getIndexOfSelectedTag() {
+    return this.codeTagsList.getSelectedIndex();
+  }
+  
   public String getSelectedProject() {
     return this.projectsNameBox.getSelectedItem().toString();
   }
@@ -166,6 +182,10 @@ public class ExportCodeView extends JFrame {
     this.exportButton.addActionListener(listener);
   }
 
+  public void setRemoveTagButtonAction(ActionListener listener) {
+    this.removeTagButton.addActionListener(listener);
+  }
+  
   public void setAddTagButtonAction(ActionListener listener) {
     this.addTagButton.addActionListener(listener);
   }
@@ -183,8 +203,14 @@ public class ExportCodeView extends JFrame {
   public void addCodeTag(String tag) {
     this.codeTagsData.addElement(tag);
   }
+  
+  public void removeCodeTagAt(int index) {
+    if(index >= 0 && index < this.codeTagsData.size())
+      this.codeTagsData.removeElementAt(index);
+  }
 
   public void clearCodesNameList() {
+    if(this.exportButton.isEnabled()) this.exportButton.setEnabled(false);
     this.codesNameData.clear();
   }
   

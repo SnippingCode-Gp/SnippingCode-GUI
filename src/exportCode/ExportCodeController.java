@@ -26,6 +26,7 @@ public class ExportCodeController {
     this.view.setTagNameFieldAction(new PreventSpacesInJTextFieldAction());
     this.view.setAddTagButtonAction(new TagButtonAction());
     this.view.setExportButtonAction(new ExportButtonAction());
+    this.view.setRemoveTagButtonAction(new RemoveTagButtonAction());
   }
 
   private List<String> loadProjectsName(String workspacePath) {
@@ -75,6 +76,14 @@ public class ExportCodeController {
       view.clearCodesNameList();
       view.clearCodeTagsList();
       browse(view.getSelectedProject());
+    }
+    
+  }
+  
+  class RemoveTagButtonAction implements ActionListener {
+
+    public void actionPerformed(ActionEvent e) {
+      view.removeCodeTagAt(view.getIndexOfSelectedTag());
     }
     
   }
