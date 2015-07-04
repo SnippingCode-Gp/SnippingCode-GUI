@@ -135,8 +135,8 @@ public class AutoCompletion extends PlainDocument {
 				public void keyPressed(KeyEvent arg0) {
 
 					if (arg0.getKeyChar() == KeyEvent.VK_ENTER) {
-
-						System.out.println(editor.getText());
+					  String codeName = editor.getText();
+					  System.out.println(codeName);
 						frame.dispose();
 						
 					}
@@ -265,5 +265,13 @@ public class AutoCompletion extends PlainDocument {
 		frame.setVisible(true);
 	}
 
+	public static void run(String[] codesName) {
+    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+      public void run() {
+        AutoCompletion.createAndShowGUI(codesName);
+      }
+    });
+	}
+	
 }
 
