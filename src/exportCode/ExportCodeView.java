@@ -48,7 +48,7 @@ public class ExportCodeView extends JFrame {
 
 
     this.viewCodeArea =  new JTextArea();
-    this.viewCodeArea.setEditable(false);
+//    this.viewCodeArea.setEditable(false);
     this.codesNameData = new DefaultListModel<String>();
     this.codesNameList = new JList<String>(codesNameData);
     this.codesNameList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
