@@ -1,4 +1,4 @@
-# SnippingCode-GUIPLUGIN
+# SnippingCode-GUI
 this project is a java GUI app works with a server (login, sign up, ...) and it is part of plug-in project.
 
 
