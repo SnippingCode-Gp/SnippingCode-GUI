@@ -21,4 +21,7 @@ public class Login {
 		return controller.getUser();
 	}
 
+	public void refresh(){
+	  controller.refresh();
+	}
 }

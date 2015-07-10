@@ -47,8 +47,7 @@ public class LoginController {
 	private void getUserCode() {
 
 		try {
-			ArrayList<Code> codes = codesHttpRequest.getAllCode(username,
-					password, "0");
+			ArrayList<Code> codes = codesHttpRequest.getAllCode(username, password, "0");
 			fileOperation.initXmlFile(codes);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -132,5 +131,11 @@ public class LoginController {
 	public HashMap<String, String> getUser() {
 		return userService.getUser();
 	}
+
+  public void refresh() {
+    // TODO Auto-generated method stub
+    getUserCode();
+
+  }
 
 }

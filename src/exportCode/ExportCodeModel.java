@@ -52,6 +52,21 @@ public class ExportCodeModel {
 	}
 
 	public void uploadCode(String username, String passowrd) {
+   StringBuilder stringBuilder = new StringBuilder();
+    boolean flag = false;
+    for(int i = this.codeName.length() - 1; i >= 0; --i) {
+      if(this.codeName.charAt(i) == '.') {
+        flag = true;
+        continue;
+      }
+      if(flag) {
+        if(this.codeName.charAt(i) == '/') break;
+        stringBuilder.append(this.codeName.charAt(i));
+      }
+    }
+    stringBuilder.reverse();
+	  code.setName(stringBuilder.toString());
+	    
 		CodesHttpRequest request = new CodesHttpRequest();
 		code.setDescription("not done");
 		code.setType("not done");

@@ -265,10 +265,10 @@ public class AutoCompletion extends PlainDocument {
 		frame.setVisible(true);
 	}
 
-	public static void run(String[] codesName) {
+	public static void main(String[] argv) {
     javax.swing.SwingUtilities.invokeLater(new Runnable() {
       public void run() {
-        AutoCompletion.createAndShowGUI(codesName);
+        AutoCompletion.createAndShowGUI(new String[] {"mohamed", "mohamedahmed", "haitham", "ha"});
       }
     });
 	}
